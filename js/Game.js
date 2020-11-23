@@ -44,6 +44,7 @@ class Game {
     form.hide();
     
     Player.getPlayerInfo();
+    player.getCarsAtEnd();
     
     if(allPlayers !== undefined){
       background(rgb(198,135,103));
@@ -71,6 +72,8 @@ class Game {
 
         if (index === player.index){
           cars[index - 1].shapeColor = "red";
+          fill(255,0,0);
+          ellipse(x,y,60);
           camera.position.x = displayWidth/2;
           camera.position.y = cars[index-1].y;
         }
@@ -86,7 +89,9 @@ class Game {
       player.update();
     }
 
-    if(player.distance > 3860){
+    if(player.distance > 4200){
+      player.rank+=1;
+      Player.updateCarsAtEnd(player.rank);
       gameState = 2;
     }
    
@@ -95,5 +100,11 @@ class Game {
 
   end(){
     console.log("Game Ended");
+    console.log(player.rank);
+    Swal.fire(
+      'Good job!',
+      'You finished the race! and placed' + player.rank,
+      'success'
+    )
   }
 }

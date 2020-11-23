@@ -5,6 +5,7 @@ class Form {
     this.button = createButton('Play');
     this.greeting = createElement('h2');
     this.title = createElement('h2');
+    this.reset = createButton('Reset');
   }
   hide(){
     this.greeting.hide();
@@ -13,13 +14,35 @@ class Form {
     this.title.hide();
   }
 
+  restart() {
+    allPlayers = database.ref('players');
+    allPlayers.remove();
+    game.update(0);
+    player.updateCount(0);
+    Player.updateCarsAtEnd(0);
+    //playerCount = 0;
+    //gameState = 0;
+  }
+
   display(){
     this.title.html("Car Racing Game");
     this.title.position(displayWidth/2 - 50, 0);
 
     this.input.position(displayWidth/2 - 40 , displayHeight/2 - 80);
     this.button.position(displayWidth/2 + 30, displayHeight/2);
-2
+    this.reset.position(displayWidth-100, 0);
+
+    this.reset.mousePressed(()=> {
+      form.restart();
+      //playerCount = 0;
+      //gameState = 0;
+      Swal.fire(
+        'Good job!',
+        'You clicked the button!',
+        'success'
+      )
+    })
+
     this.button.mousePressed(()=>{
       this.input.hide();
       this.button.hide();
